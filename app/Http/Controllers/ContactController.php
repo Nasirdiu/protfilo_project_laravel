@@ -11,6 +11,7 @@ class ContactController extends Controller
         return view('pages.contact');
     }
     function contactRequest(Request $request){
+
         return DB::table('contacts')->insert($request->input());
     }
 }

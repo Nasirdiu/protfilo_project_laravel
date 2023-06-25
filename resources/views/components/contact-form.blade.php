@@ -42,8 +42,48 @@
 <script>
 
 let contactForm=document.getElementById('contactForm')
-contactForm.addEventListener('submit',(event)=>{
+contactForm.addEventListener('submit',async (event) => {
     event.preventDefault();
+    let name = document.getElementById('name').value;
+    let email = document.getElementById('email').value;
+    let phone = document.getElementById('phone').value;
+    let msg = document.getElementById('message').value;
+
+    if (name.length === 0) {
+        alert('Name is required')
+    } else if (email.length === 0) {
+        alert('Email is Required')
+    } else if (phone.length === 0) {
+        alert('Email is Required')
+    } else {
+        let forData = {
+            fullName: name,
+            email: email,
+            phone: phone,
+            message: msg,
+        }
+
+        let URL = '/contactRequest';
+
+        //loader show content hide
+
+        document.getElementById('loading-div').classList.remove('d-none');
+        document.getElementById('content-div').classList.add('d-none');
+
+        let result= await axios.post(URL,forData)
+
+        //loader hide content show
+        document.getElementById('loading-div').classList.add('d-none');
+        document.getElementById('content-div').classList.remove('d-none');
+
+       if(result.status===200&& result.data===1){
+          alert('Success Form');
+          contactForm.reset();
+       }
+       else {
+          alert('Form Error');
+      }
+    }
 
 })
 </script>
